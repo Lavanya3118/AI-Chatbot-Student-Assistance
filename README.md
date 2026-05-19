@@ -1,146 +1,169 @@
-# 🎙 VoiceSpend — AI Voice-Based Expense Tracker
+# 🎓 EduBot — AI Student Assistant Chatbot
 
-A full-featured, AI-powered expense tracker with voice input, smart category detection, interactive charts, and Firebase sync.
+An intelligent, AI-powered chatbot designed to assist students with subject queries, timetable management, exam schedules, and study guidance.
+
+---
+
+## 📸 Preview
+
+> Add a screenshot of your chatbot here after uploading.
+> `![EduBot Preview](screenshot.png)`
 
 ---
 
 ## 🚀 Features
 
-| Feature | Details |
-|---|---|
-| **Voice Input** | Web Speech Recognition API — speak naturally in English/Hindi-English |
-| **AI Parser** | Auto-detects amount, category & description from speech |
-| **Speech Output** | TTS feedback after every action (Web Speech Synthesis) |
-| **Pie Chart** | Category-wise donut chart (Chart.js) |
-| **Bar Chart** | 6-month spending trend |
-| **Category Breakdown** | Animated progress bars with percentages |
-| **Monthly Navigation** | Browse any past/future month |
-| **AI Insights** | Month-over-month analysis, projections, top category |
-| **Filter Tabs** | Filter transactions by category |
-| **Export CSV** | Download expenses as spreadsheet |
-| **Firebase Ready** | Optional Firestore integration (see `firebase-config.js`) |
-| **Local Storage** | Works offline without Firebase setup |
+- 🤖 **AI-Powered Chat** — Real-time responses using Claude (Anthropic API)
+- 📅 **Timetable Management** — View full weekly class schedule
+- 📋 **Exam Schedule & Countdown** — Track upcoming exams with urgency alerts
+- 💬 **Interactive Chat Interface** — Clean, responsive chat UI
+- ⚡ **Quick Actions** — One-click prompts for common student queries
+- 🧠 **Study Assistance** — Get help with subjects, concepts, and study tips
+- 🗑️ **Clear Chat** — Reset conversation anytime
 
 ---
 
-## 🗣 Voice Commands (Examples)
+## 🛠️ Technologies Used
 
-```
-"Spent 200 on food"
-"Paid 1200 for electricity bill"
-"Bought groceries for 850 rupees"
-"500 rupees taxi fare"
-"Lunch at restaurant 350"
-"Netflix subscription 499"
-"Medicine from pharmacy 320"
-"Uber ride 180"
-```
+| Technology | Purpose |
+|------------|---------|
+| HTML5 | Structure and layout |
+| CSS3 | Styling and animations |
+| JavaScript (ES6+) | Logic and interactivity |
+| Anthropic Claude API | AI-powered responses |
+| Google Fonts | Typography (Sora, Space Mono) |
+
+> **Note:** MySQL integration can be added for storing chat history, user profiles, and dynamic timetable/exam data.
 
 ---
 
 ## 📁 Project Structure
 
 ```
-voice-expense-tracker/
-├── index.html          # Main app (all-in-one HTML/CSS/JS)
-├── firebase-config.js  # Firebase Firestore integration guide
-└── README.md           # This file
+student-ai-chatbot/
+│
+├── student-ai-chatbot.html   # Main application file
+├── README.md                 # Project documentation
+└── screenshot.png            # Preview image (add yours)
 ```
 
 ---
 
-## 🛠 Technologies
+## ⚙️ Setup & Installation
 
-- **HTML5 / CSS3 / Vanilla JavaScript** — No framework required
-- **Web Speech API** — `SpeechRecognition` for voice input
-- **Web Speech Synthesis API** — TTS audio feedback
-- **Chart.js 4.4** — Donut and bar charts
-- **LocalStorage** — Default offline database
-- **Firebase Firestore** — Optional cloud sync (see setup below)
-
----
-
-## ⚡ Quick Start
-
-### Option A — Just open the file (localStorage mode)
+### 1. Clone the Repository
 ```bash
-# Simply open in Chrome or Edge (Firefox has limited Speech API support)
-open index.html
+git clone https://github.com/YOUR_USERNAME/student-ai-chatbot.git
+cd student-ai-chatbot
 ```
 
-### Option B — Local development server
-```bash
-# Using Python
-python3 -m http.server 8080
-# Open http://localhost:8080
+### 2. Get Your Anthropic API Key
+- Go to [console.anthropic.com](https://console.anthropic.com)
+- Sign up / Log in
+- Navigate to **API Keys** → Create a new key
 
-# Using Node.js
-npx serve .
-# Open http://localhost:3000
+### 3. Add Your API Key
+Open `student-ai-chatbot.html` and find this line:
+```javascript
+headers: { 'Content-Type': 'application/json' },
+```
+Add your key:
+```javascript
+headers: {
+  'Content-Type': 'application/json',
+  'x-api-key': 'YOUR_API_KEY_HERE',
+  'anthropic-version': '2023-06-01'
+},
 ```
 
-> ⚠️ Chrome requires HTTPS or localhost for the Microphone API
+### 4. Open in Browser
+Simply open `student-ai-chatbot.html` in any modern browser — no server needed!
 
 ---
 
-## 🔥 Firebase Setup (Optional — for cloud sync)
+## 💬 How to Use
 
-1. Go to [Firebase Console](https://console.firebase.google.com)
-2. Create a new project (e.g. `voicespend`)
-3. Enable **Firestore Database** (test mode)
-4. Enable **Authentication → Anonymous**
-5. Copy your config into `firebase-config.js`
-6. Follow the integration instructions inside `firebase-config.js`
+1. Open the chatbot in your browser
+2. Type any question in the input box
+3. Press **Enter** or click the send button
+4. Use **Quick Action** buttons in the sidebar for common queries
+5. Click **📅 Timetable** or **📋 Exams** in the navbar for schedule details
+6. Click **🗑 Clear** to reset the conversation
 
-### Firestore Security Rules
+### Example Questions You Can Ask
+- *"What are my classes today?"*
+- *"When is my next exam?"*
+- *"Explain Newton's laws of motion"*
+- *"Give me tips to study for Math"*
+- *"Help me write an essay introduction"*
+
+---
+
+## 🗄️ MySQL Integration (Optional)
+
+To connect a database for dynamic data, create the following tables:
+
+```sql
+CREATE TABLE students (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100)
+);
+
+CREATE TABLE timetable (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  student_id INT,
+  day VARCHAR(20),
+  time VARCHAR(20),
+  subject VARCHAR(100),
+  room VARCHAR(50),
+  teacher VARCHAR(100)
+);
+
+CREATE TABLE exams (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  student_id INT,
+  subject VARCHAR(100),
+  exam_date DATE,
+  exam_time TIME,
+  room VARCHAR(50)
+);
+
+CREATE TABLE chat_history (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  student_id INT,
+  role VARCHAR(20),
+  message TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /users/{userId}/expenses/{expenseId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-  }
-}
-```
 
 ---
 
-## 📊 Category Detection Keywords
+## 🌐 Live Demo
 
-| Category | Keywords |
-|---|---|
-| 🍔 Food | food, eat, lunch, dinner, restaurant, café, swiggy, zomato, grocery... |
-| 🚗 Transport | taxi, uber, ola, bus, train, fuel, petrol, metro, toll... |
-| 🛍 Shopping | clothes, amazon, flipkart, mall, fashion, shoes, online... |
-| 💊 Health | medicine, doctor, hospital, pharmacy, gym, fitness... |
-| 🎬 Entertainment | movie, netflix, spotify, game, cinema, party, subscription... |
-| 💡 Bills | electricity, water, internet, rent, EMI, mobile, insurance... |
-| 📦 Other | everything else |
+Hosted via GitHub Pages:
+👉 `https://YOUR_USERNAME.github.io/student-ai-chatbot/student-ai-chatbot.html`
 
 ---
 
-## 🌐 Browser Support
+## 👨‍💻 Author
 
-| Browser | Voice Input | TTS | Charts |
-|---|---|---|---|
-| Chrome 88+ | ✅ | ✅ | ✅ |
-| Edge 88+ | ✅ | ✅ | ✅ |
-| Safari 15+ | ⚠️ Partial | ✅ | ✅ |
-| Firefox | ❌ | ✅ | ✅ |
-
----
-
-## 📦 Future Enhancements
-
-- [ ] Multi-language support (Hindi, Telugu, Tamil)
-- [ ] Budget goals with alerts
-- [ ] Receipt photo scanning (OCR)
-- [ ] Google Sheets export
-- [ ] PWA (offline mobile app)
-- [ ] WhatsApp bot integration
+**Your Name**
+- GitHub: [@YOUR_USERNAME](https://github.com/Lavanya3118)
+- Email: your@email.com
 
 ---
 
 ## 📄 License
-MIT — Free to use and modify.
+
+This project is licensed under the MIT License.
+
+---
+
+## 🙏 Acknowledgements
+
+- [Anthropic](https://anthropic.com) — Claude AI API
+- [Google Fonts](https://fonts.google.com) — Sora & Space Mono fonts
+- [GitHub Pages](https://pages.github.com) — Free hosting
+
